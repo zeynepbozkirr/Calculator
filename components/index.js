@@ -7,27 +7,21 @@ import {useState} from "react";
     const numArr=[0,1,2,3,4,5,6,7,8,9]
      const [val,setVal]  =useState([])
 
-
-
-     // console.log(  calc(3 / 2),"val")
-     // console.log(  calc(3 / 2),"val")
-
-
      const onClickButon=(b)=>{
-        setVal([...val,b])
-         console.log(b,"bbb")
-         console.log(`${b} clicked!`)
+        setVal(val+b)
+         console.log(val,"bbb")
      }
+
 
     return (
         <div className={styles.container}>
-            {numArr.map((a)=>
+            {numArr.map((a,index)=>
 
                 <button value={a}
+                        key={index}
                         onClick={()=> {
                             onClickButon(a)
                         }}
-
                 >{a}</button>
             )
             }
