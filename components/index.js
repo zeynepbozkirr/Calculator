@@ -20,12 +20,13 @@ import styles from  "./component.module.css"
 
          if (operation !== "=") {
              setOpr(operation)
+             setVal(0)
+
              if(result){
                  setResult(result)
              }
              else if(!result){
                  setResult(val)
-                 setVal(0)
 
              }
          }
@@ -33,6 +34,7 @@ import styles from  "./component.module.css"
              setResult(eval(`${result}
              ${opr}
              ${val} `))
+             // setVal(0)
 
          }
 
