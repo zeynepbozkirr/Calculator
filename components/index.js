@@ -4,39 +4,65 @@ import styles from  "./component.module.css"
 
  function Calculator() {
 
-     const numArr=[0,1,2,3,4,5,6,7,8,9]
-     const operationArr=["+","-","*","/","="]
+     const numArr=[9,8,7,6,5,4,3,2,1,0]
+     const operationArr=["+","-","*","/","=","C","+/-",","]
      const [val,setVal]  =useState( 0)
      const [result,setResult]  =useState(0)
      const [opr,setOpr]  =useState("")
+     const [click,setClick]  =useState(false)
+
 
      const onClickNum=(number)=>{
-        if( opr !=="=" || !val){
-            setVal((val+number).toString())
-        }
+
+         setVal((val+number).toString())
+        //  else{
+        //     setVal(0)
+        // }
      }
      const onClickOpr = (operation) => {
 
-
-         if (operation !== "=") {
+         if (operation !== "=" && operation !== "C" && operation !==  "+/-"  && operation !==  ",") {
              setOpr(operation)
              setVal(0)
 
+             // if (val){
+             // }
              if(result){
                  setResult(result)
              }
              else if(!result){
                  setResult(val)
-
              }
+
          }
+         if( operation === "+/-"){
+             console.log(opr,"opr +-")
+             setVal((val * -1).toString())
+             setResult(val)
+         }
+          if(operation === "C"){
+             setVal(0)
+             setResult(0)
+         }
+          if(operation === ","){
+              setVal(val + ",")
+              setResult(val)
+          }
          if (operation === "=") {
-             setResult(eval(`${result}
+             if(val<=0){
+                 setResult(val)
+             }
+             else if(val>0) {
+                 setResult(eval(`${result}
              ${opr}
              ${val} `))
-             // setVal(0)
+                 // setVal(0)
+
+             }
+
 
          }
+
 
 
 
@@ -45,12 +71,12 @@ import styles from  "./component.module.css"
      return (
         <div className={styles.container}>
           {numArr.map((num,i)=>
-                <button value={num}
+                <button  className={styles.button} value={num}
                         key={i}
                         onClick={()=> {
                             onClickNum(num)
                         }}
-                >{num}</button>
+                >{num}  {i === 2 || i ===5 || i===8 ? "<br/>":  null }</button>
             )
             }
 
