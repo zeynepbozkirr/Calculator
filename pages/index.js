@@ -6,6 +6,7 @@ import Calculator from "../components";
 export default function Home() {
   return (
     <div className={styles.container}>
+
         <Calculator/>
 
     </div>

@@ -1,8 +1,7 @@
 import {useState, useRef, useEffect} from "react";
 import styles from  "./component.module.css"
 
-
- function Calculator() {
+export default function Calculator() {
 
      const numArr=[9,8,7,6,5,4,3,2,1,0]
      const operationArr=["+","-","*","/","=","C","+/-",","]
@@ -10,6 +9,8 @@ import styles from  "./component.module.css"
      const [result,setResult]  =useState(0)
      const [opr,setOpr]  =useState("")
      const [click,setClick]  =useState(false)
+     const [num, setNum] = useState(0);
+
 
 
      const onClickNum=(number)=>{
@@ -24,9 +25,6 @@ import styles from  "./component.module.css"
          if (operation !== "=" && operation !== "C" && operation !==  "+/-"  && operation !==  ",") {
              setOpr(operation)
              setVal(0)
-
-             // if (val){
-             // }
              if(result){
                  setResult(result)
              }
@@ -35,37 +33,35 @@ import styles from  "./component.module.css"
              }
 
          }
-         if( operation === "+/-"){
+
+         else  if( operation === "+/-"){
              console.log(opr,"opr +-")
              setVal((val * -1).toString())
              setResult(val)
          }
-          if(operation === "C"){
+
+         else if(operation === "C"){
              setVal(0)
              setResult(0)
          }
-          if(operation === ","){
+         else if(operation === ","){
               setVal(val + ",")
               setResult(val)
           }
-         if (operation === "=") {
-             if(val<=0){
-                 setResult(val)
+
+         else  if (operation === "=") {
+             if(!val){
+                 setResult((prevNum) => prevNum)
              }
-             else if(val>0) {
+             else if(val) {
                  setResult(eval(`${result}
              ${opr}
              ${val} `))
-                 // setVal(0)
 
              }
 
 
          }
-
-
-
-
 
      }
      return (
@@ -76,7 +72,7 @@ import styles from  "./component.module.css"
                         onClick={()=> {
                             onClickNum(num)
                         }}
-                >{num}  {i === 2 || i ===5 || i===8 ? "<br/>":  null }</button>
+                >{num}  </button>
             )
             }
 
@@ -95,7 +91,11 @@ import styles from  "./component.module.css"
             {result}
 
 
+
+            <button onClick={() => setNum((prevNum) => prevNum+1 )}>
+                Increment
+            </button>
+            {num}
         </div>
     )
 }
-export default Calculator
