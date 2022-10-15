@@ -1,10 +1,27 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "./component.module.css";
+import { Grid, GridItem, Input, Text } from "@chakra-ui/react";
 
 export default function Calculator() {
   const valueARR = [
     {
-      value: 9,
+      value: "C",
+      type: "operation",
+    },
+    {
+      value: "+/-",
+      type: "operation",
+    },
+    {
+      value: "%",
+      type: "operation",
+    },
+    {
+      value: "/",
+      type: "operation",
+    },
+    {
+      value: 7,
       type: "number",
     },
     {
@@ -12,11 +29,16 @@ export default function Calculator() {
       type: "number",
     },
     {
-      value: 7,
+      value: 9,
       type: "number",
     },
     {
-      value: 6,
+      value: "*",
+      type: "operation",
+    },
+
+    {
+      value: 4,
       type: "number",
     },
     {
@@ -24,11 +46,16 @@ export default function Calculator() {
       type: "number",
     },
     {
-      value: 4,
+      value: 6,
       type: "number",
     },
     {
-      value: 3,
+      value: "-",
+      type: "operation",
+    },
+
+    {
+      value: 1,
       type: "number",
     },
     {
@@ -36,8 +63,13 @@ export default function Calculator() {
       type: "number",
     },
     {
-      value: 1,
+      value: 3,
       type: "number",
+    },
+
+    {
+      value: "+",
+      type: "operation",
     },
     {
       value: 0,
@@ -47,32 +79,9 @@ export default function Calculator() {
       value: ".",
       type: "number",
     },
-    {
-      value: "+",
-      type: "operation",
-    },
-    {
-      value: "-",
-      type: "operation",
-    },
-    {
-      value: "*",
-      type: "operation",
-    },
-    {
-      value: "/",
-      type: "operation",
-    },
+
     {
       value: "=",
-      type: "operation",
-    },
-    {
-      value: "C",
-      type: "operation",
-    },
-    {
-      value: "+/-",
       type: "operation",
     },
   ];
@@ -81,10 +90,11 @@ export default function Calculator() {
   const [opr, setOpr] = useState("");
 
   const onClickNum = (number) => {
+    console.log(number, "NADS");
     if (val !== "0.") {
       setVal((val + number).toString());
       // setVal((prevState) => (prevState + number).toString());
-      console.log(typeof number, "nnn");
+      console.log(val, "nnn");
     } else {
       if (number !== ".") {
         setVal((val + number).toString());
@@ -99,13 +109,13 @@ export default function Calculator() {
       operation !== ","
     ) {
       setOpr(operation);
-      setVal(0);
 
       if (result) {
         setResult(result);
       } else {
         setResult(val);
       }
+      setVal(0);
     } else if (operation === "+/-") {
       console.log(opr, "opr +-");
       setVal((val * -1).toString());
@@ -113,7 +123,8 @@ export default function Calculator() {
     } else if (operation === "C") {
       setVal(0);
       setResult(0);
-    } else if (operation === "=") {
+      setOpr("");
+    } else {
       if (!val) {
         setVal(result);
         setResult(
@@ -132,26 +143,48 @@ export default function Calculator() {
   };
   return (
     <div className={styles.container}>
-      <div>
-        val: {val}/{result}
-        <br />
-      </div>
+      <Text>
+        {val}
+        {opr}
+      </Text>
 
-      <div className={styles.button}>
-        {valueARR.map((num, i) => (
-          <button
-            value={num.value}
-            key={i}
-            onClick={() => {
-              num.type === "number"
-                ? onClickNum(num.value)
-                : onClickOpr(num.value);
-            }}
-          >
-            {num.value}
-          </button>
-        ))}
-      </div>
+      <Text>{result}</Text>
+
+      <Grid templateColumns="repeat(4, 1fr)" gap={10}>
+        {valueARR.map((num, i) =>
+          num.value === 0 ? (
+            <GridItem colSpan={2} w="100%" h="50">
+              <button
+                value={num.value}
+                key={i}
+                onClick={() => {
+                  num.type === "number"
+                    ? onClickNum(num.value)
+                    : onClickOpr(num.value);
+                }}
+                className={styles.button}
+              >
+                {num.value}
+              </button>
+            </GridItem>
+          ) : (
+            <GridItem w="50px" h="50">
+              <button
+                value={num.value}
+                key={i}
+                onClick={() => {
+                  num.type === "number"
+                    ? onClickNum(num.value)
+                    : onClickOpr(num.value);
+                }}
+                className={styles.button}
+              >
+                {num.value}
+              </button>
+            </GridItem>
+          )
+        )}
+      </Grid>
     </div>
   );
 }
