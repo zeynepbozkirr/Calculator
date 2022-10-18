@@ -9,13 +9,14 @@ export default function Calculator() {
       type: "operation",
     },
     {
-      value: "+/-",
+      value: "CE",
       type: "operation",
     },
     {
-      value: "%",
+      value: "+/-",
       type: "operation",
     },
+
     {
       value: "/",
       type: "operation",
@@ -90,15 +91,14 @@ export default function Calculator() {
   const [opr, setOpr] = useState("");
 
   const onClickNum = (number) => {
-    console.log(number, "NADS");
-    if (val !== "0.") {
-      setVal((val + number).toString());
-      // setVal((prevState) => (prevState + number).toString());
-      console.log(val, "nnn");
-    } else {
-      if (number !== ".") {
+    var pointControl = val.toString().indexOf("."); // result: 7
+
+    if (number === ".") {
+      if (pointControl == -1) {
         setVal((val + number).toString());
       }
+    } else {
+      setVal((val + number).toString());
     }
   };
   const onClickOpr = (operation) => {
@@ -106,7 +106,8 @@ export default function Calculator() {
       operation !== "=" &&
       operation !== "C" &&
       operation !== "+/-" &&
-      operation !== ","
+      operation !== "," &&
+      operation !== "CE"
     ) {
       setOpr(operation);
 
@@ -132,6 +133,7 @@ export default function Calculator() {
              ${opr}
              ${result}`)
         );
+        console.log("tt");
       } else {
         setResult(
           eval(`${result}
@@ -143,12 +145,12 @@ export default function Calculator() {
   };
   return (
     <div className={styles.container}>
-      <Text>
+      <Text className={styles.text}>
         {val}
         {opr}
       </Text>
 
-      <Text>{result}</Text>
+      <Text className={styles.text}>{result}</Text>
 
       <Grid templateColumns="repeat(4, 1fr)" gap={10}>
         {valueARR.map((num, i) =>

@@ -15,9 +15,17 @@
     height: 100%;
     background: #354357;
     border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
 
 }
 .button:hover{
     background: #6C63FF;
 
+}
+.text{
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
 }
