@@ -125,6 +125,9 @@ export default function Calculator() {
       setVal(0);
       setResult(0);
       setOpr("");
+    } else if (operation === "CE") {
+      var sliceValue = val.toString().slice(0, -1);
+      setVal(sliceValue);
     } else {
       if (!val) {
         setVal(result);
