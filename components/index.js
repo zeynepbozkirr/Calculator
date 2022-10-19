@@ -128,6 +128,9 @@ export default function Calculator() {
     } else if (operation === "CE") {
       var sliceValue = val.toString().slice(0, -1);
       setVal(sliceValue);
+      if (!sliceValue) {
+        setVal(0);
+      }
     } else {
       if (!val) {
         setVal(result);
@@ -149,8 +152,11 @@ export default function Calculator() {
   return (
     <div className={styles.container}>
       <Text className={styles.text}>
-        {val}
-        {opr}
+        {val.toString().length > 10
+          ? `...${val
+              .toString()
+              .slice(val.toString().length - 10, val.toString().length)}`
+          : val}
       </Text>
 
       <Text className={styles.text}>{result}</Text>
